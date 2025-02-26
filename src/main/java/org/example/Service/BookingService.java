@@ -48,6 +48,14 @@ public class BookingService {
             reservations.forEach(System.out::println); // Imprime todas as reservas encontradas
         }
     }
+    public Room createRoom(String name) {
+        if (roomRepository.existsByName(name)) {
+            throw new IllegalArgumentException("Room with this name already exists");
+        }
+        Room room = new Room();
+        room.setName(name);
+        return roomRepository.save(room);
+    }
 
     /**
      * Cancela uma reserva específica, informada pelo nome da sala e do usuário.
@@ -56,7 +64,7 @@ public class BookingService {
      * @param user Nome do usuário que deseja cancelar a reserva.
      */
     public void cancelReservation(String roomName, String user) {
-        Reservation reservation = reservationRepository.findByRoom_NameAndUser(roomName, user); // Busca a reserva
+        Reservation reservation = reservationRepository.findByRoomNameAndUser(roomName, user); // Busca a reserva
         if (reservation != null) {
             reservationRepository.delete(reservation); // Deleta a reserva se encontrada
             System.out.println("Reserva cancelada.");

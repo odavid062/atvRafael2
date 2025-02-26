@@ -11,6 +11,7 @@ public class Reservation {
 
     private String roomName; // Nome da sala reservada
 
+    @Column(name = "username") // Evita conflitos com a palavra reservada 'user' no PostgreSQL
     private String user; // Nome do usuário que fez a reserva
 
     // Construtor padrão exigido pelo JPA
